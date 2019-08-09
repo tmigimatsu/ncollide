@@ -404,6 +404,9 @@ impl<N: Real> EPA<N> {
                 }
             }
 
+            if first_new_face_id >= self.faces.len() {
+                return None;
+            }
             self.faces[first_new_face_id].adj[2] = self.faces.len() - 1;
             self.faces.last_mut().unwrap().adj[1] = first_new_face_id;
 
