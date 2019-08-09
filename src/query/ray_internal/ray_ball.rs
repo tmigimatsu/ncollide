@@ -89,7 +89,9 @@ pub fn ball_toi_with_ray<N: Real>(
     let b = dcenter.dot(&ray.dir);
     let c = dcenter.norm_squared() - radius * radius;
 
-    if c > na::zero() && b > na::zero() {
+    if c == na::zero() {
+        (true, Some(na::zero()))
+    } else if c > na::zero() && b > na::zero() {
         (false, None)
     } else {
         let delta = b * b - a * c;
