@@ -1,7 +1,7 @@
 use alga::general::Real;
 use na;
 
-use crate::math::{Isometry, Point};
+use crate::math::{Isometry, Point, Vector};
 use crate::query::{PointProjection, PointQuery};
 use crate::shape::{Ball, FeatureId};
 use crate::utils::IsometryOps;
@@ -16,9 +16,11 @@ impl<N: Real> PointQuery<N> for Ball<N> {
 
         if inside && solid {
             PointProjection::new(true, *pt)
+        } else if distance_squared == na::zero() {
+            let ls_proj = Point::origin() + Vector::x() * self.radius();
+            PointProjection::new(inside, m * ls_proj)
         } else {
-            let ls_proj = Point::origin() + ls_pt.coords / distance_squared.sqrt();
-
+            let ls_proj = Point::origin() + ls_pt.coords / distance_squared.sqrt() * self.radius();
             PointProjection::new(inside, m * ls_proj)
         }
     }
