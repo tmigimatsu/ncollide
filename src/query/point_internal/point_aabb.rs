@@ -40,7 +40,7 @@ impl<N: Real> AABB<N> {
                         best = pt_maxs_i
                     }
                 } else if mins_pt_i > best {
-                    best_id = -(i as isize);
+                    best_id = -((i + 1) as isize);
                     best = mins_pt_i
                 }
             }
@@ -48,7 +48,7 @@ impl<N: Real> AABB<N> {
             let mut shift: Vector<N> = na::zero();
 
             if best_id < 0 {
-                shift[(-best_id) as usize] = best;
+                shift[(-best_id - 1) as usize] = best;
             } else {
                 shift[best_id as usize] = -best;
             }
